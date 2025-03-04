@@ -5,30 +5,34 @@
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-    <h1>Karbon Ayak İzi Hesapla</h1>
+    <h1>Karbon Ayak İzi Hesapla 🌍</h1>
+
     <form method="post">
         <label>Nasıl ulaşıyorsun?</label>
         <select name="transport">
-            <option value="walking">Yürüyerek</option>
-            <option value="bike">Bisiklet</option>
-            <option value="bus">Otobüs</option>
-            <option value="car">Araba</option>
+            <option value="walking">🚶‍♂️ Yürüyerek</option>
+            <option value="bike">🚲 Bisiklet</option>
+            <option value="bus">🚌 Otobüs</option>
+            <option value="car">🚗 Araba</option>
         </select>
-        <br>
+        <br><br>
+
         <label>Elektrik kullanımın nasıl?</label>
         <select name="electricity">
-            <option value="low">Düşük</option>
-            <option value="medium">Orta</option>
-            <option value="high">Yüksek</option>
+            <option value="low">🔋 Düşük</option>
+            <option value="medium">⚡ Orta</option>
+            <option value="high">💡 Yüksek</option>
         </select>
-        <br>
+        <br><br>
+
         <label>Beslenme alışkanlığın?</label>
         <select name="diet">
-            <option value="vegetarian">Vejetaryen</option>
-            <option value="balanced">Dengeli</option>
-            <option value="meat">Et ağırlıklı</option>
+            <option value="vegetarian">🥦 Vejetaryen</option>
+            <option value="balanced">🍛 Dengeli</option>
+            <option value="meat">🥩 Et ağırlıklı</option>
         </select>
-        <br>
+        <br><br>
+
         <button type="submit">Hesapla</button>
     </form>
 </body>
