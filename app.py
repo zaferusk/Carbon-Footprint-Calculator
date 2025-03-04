@@ -1,6 +1,10 @@
 from flask import Flask, render_template, request
+import logging
 
 app = Flask(__name__)
+
+# Hata kaydını etkinleştir
+logging.basicConfig(level=logging.DEBUG)
 
 # Karbon ayak izi hesaplama fonksiyonu
 def calculate_carbon_footprint(transport, electricity, diet):
@@ -36,23 +40,35 @@ def calculate_carbon_footprint(transport, electricity, diet):
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    if request.method == "POST":
-        transport = request.form.get("transport")
-        electricity = request.form.get("electricity")
-        diet = request.form.get("diet")
-        
-        score = calculate_carbon_footprint(transport, electricity, diet)
-        
-        if score <= 6:
-            result = "Harika! Çevreci bir kahramansın! 🌿"
-        elif score <= 12:
-            result = "Fena değil ama daha dikkatli olmalısın! ⚠️"
-        else:
-            result = "Çevre için daha dikkatli olmalısın! 🚨"
-        
-        return render_template("result.html", score=score, result=result)
-    
-    return render_template("index.html")
+    try:
+        if request.method == "POST":
+            transport = request.form.get("transport", "").strip()
+            electricity = request.form.get("electricity", "").strip()
+            diet = request.form.get("diet", "").strip()
+
+            # Eksik veri olup olmadığını kontrol et
+            if not transport or not electricity or not diet:
+                app.logger.error("Eksik veri girdisi!")
+                return "HATA: Eksik bilgi girdiniz, lütfen tüm alanları doldurun!", 400
+
+            app.logger.info(f"Form verisi: transport={transport}, electricity={electricity}, diet={diet}")
+            
+            score = calculate_carbon_footprint(transport, electricity, diet)
+            
+            if score <= 6:
+                result = "Harika! Çevreci bir kahramansın! 🌿"
+            elif score <= 12:
+                result = "Fena değil ama daha dikkatli olmalısın! ⚠️"
+            else:
+                result = "Çevre için daha dikkatli olmalısın! 🚨"
+            
+            return render_template("result.html", score=score, result=result)
+
+        return render_template("index.html")
+
+    except Exception as e:
+        app.logger.error(f"Beklenmedik hata: {str(e)}")
+        return "Sunucuda bir hata oluştu. Lütfen tekrar deneyin.", 500
 
 if __name__ == "__main__":
     app.run(debug=True)
