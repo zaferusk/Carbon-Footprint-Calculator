@@ -50,4 +50,9 @@ def index():
         else:
             result = "Çevre için daha dikkatli olmalısın! 🚨"
         
-        re
+        return render_template("result.html", score=score, result=result)
+    
+    return render_template("index.html")
+
+if __name__ == "__main__":
+    app.run(debug=True)
