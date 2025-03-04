@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sonuç</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <h1>Sonuç: {{ score }}</h1>
+    
+    {% if score <= 6 %}
+        <p style="color: green;">Harika! Çevreci bir kahramansın! 🌿</p>
+        <img src="https://source.unsplash.com/400x300/?nature" width="300">
+    {% elif score <= 12 %}
+        <p style="color: orange;">Fena değil ama daha dikkatli olmalısın! ⚠️</p>
+        <img src="https://source.unsplash.com/400x300/?warning" width="300">
+    {% else %}
+        <p style="color: red;">Çevre için daha dikkatli olmalısın! 🚨</p>
+        <img src="https://source.unsplash.com/400x300/?pollution" width="300">
+    {% endif %}
+
+    <br><br>
+    <a href="/">Tekrar Hesapla</a>
+</body>
+</html>
